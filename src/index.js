@@ -72,7 +72,7 @@ app.get('/session', (req, res) => {
     return res.send(users[req.me.id]);
 });
 
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT || 5000, () =>
   console.log(`listening on port ${process.env.PORT}!`),
 );
 
