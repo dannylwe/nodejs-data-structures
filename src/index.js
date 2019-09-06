@@ -35,18 +35,18 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/:userId', (req, res) => {
-    return res.send(users[req.params.id]);
+    return res.send(users[req.params.userId]);
 });
 
-app.post('/users', (req, res) => {
-    return res.send('ummm...we are live\n');
+app.get('/messages', (req, res) => {
+    return res.send(Object.values(messages));
 });
 
-app.put('/users/:userId', (req, res) => {
-    return res.send(`PUT methond on user/ ${req.params.userId}`);
+app.get('/messages/:messageId', (req, res) => {
+    return res.send(messages[req.params.messageId]);
 });
 
-app.delete('/users/userId', (req, res) => {
+app.delete('/users/:userId', (req, res) => {
     return res.send(`DELETE methond on user/ ${req.params.userId}`);
 });
 
