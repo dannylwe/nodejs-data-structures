@@ -1,4 +1,7 @@
-import 'dotenv/config';
+import express from 'express';
 
-console.log(process.env.MY_SECRET);
-console.log("hello, let's make magic")
+const app = express();
+
+app.listen(3000, () =>
+  console.log('Example app listening on port 3000!'),
+);
