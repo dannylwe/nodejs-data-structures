@@ -3,7 +3,7 @@ import moment from "moment";
 
 class postController {
   static getPosts(req, res) {
-    if(Posts.length < 1) {
+    if (Posts.length < 1) {
       return res.status(200).json({
         message: "no posts currently"
       });
@@ -16,11 +16,11 @@ class postController {
   }
   static createPost(req, res) {
     const newId = parseInt(Posts.length) + 1;
-    const { title, body } = req.body;
+    const { title, text } = req.body;
     const newPost = {
       id: newId,
       title,
-      body,
+      text,
       created_at: moment.utc().format()
     };
     Posts.push(newPost);
@@ -31,9 +31,7 @@ class postController {
   }
   static getOnePost(req, res) {
     const { id } = req.params;
-    const getPostById = Posts.find(onePost => {
-      onePost.id === id;
-    });
+    const getPostById = Posts.find(onePost => onePost.id == id);
     if (getPostById) {
       return res.status(200).json({
         message: "found post with Id",
@@ -47,11 +45,14 @@ class postController {
   }
   static updatePost(req, res) {
     const { id } = req.params;
-    const updatePost = Posts.find(postToUpdate => {
-      postToUpdate.id === id;
-    });
+    const { title, text } = req.body;
+    const updatePost = Posts.find(onePost => onePost.id == id);
     if (updatePost) {
-      updatePost.title == req.body.title, updatePost.body === req.body.title;
+      updatePost.title == title, updatePost.text === text;
+    } else {
+      res.status(400).json({
+        message: "post with that Id does not exist"
+      })
     }
     return res.status(201).json({
       message: "post updated",
@@ -60,14 +61,12 @@ class postController {
   }
   static deletePost(req, res) {
     const { id } = req.params;
-    const postToDelete = Posts.find(postFound => postFound.id === id);
+    const postToDelete = Posts.find(onePost => onePost.id == id);
     if (postToDelete) {
-      const newPosts = Posts.filter(filteredList => {
-        return filteredList != postToDelete;
-      });
+      Posts.splice(postToDelete + 1, 1);
       res.status(200).json({
         message: "post successfully deleted",
-        deletedPost: postToDelete
+        deletedPost: postToDelete,
       });
     } else {
       res.status(400).json({
